@@ -16,9 +16,9 @@ type: page
 ## 联系我
 
 * GitHub：[zd304](https://github.com/zd304)
-* email：gaohaoyang126@126.com
-* [Weibo](http://weibo.com/3115521wh)
-* [知乎](https://www.zhihu.com/people/)
+* email：568892758@qq.com
+* [Weibo](https://weibo.com/u/1687235445/home?wvr=5)
+* [知乎](https://www.zhihu.com/people/zhang-dong-13-77)
 
 ## 友情链接
 
