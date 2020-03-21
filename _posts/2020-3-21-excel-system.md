@@ -93,3 +93,61 @@ CSV格式本质上就是文本文件，因此CSV格式文本不需要专门的�
 * 简化工作流程，提升团队工作效率，在项目量级越大越能体现出其优势
 
 综合分析，作者更偏爱使用tab格式的CSV格式来存储游戏数据。本文也重点探讨一种使用tab格式的CSV格式来存储游戏数据的方案。
+
+## 实现
+
+### 1. 概览
+
+为了实现一套基于CSV格式的表格配置系统，可以把系统分为以下四个模块：表格数据模块、表格加载模块、表格解析模块、表格编辑器模块。
+
+### 2. 表格数据模块
+
+该模块根据游戏所有的数据类型分别定义了其对应的数据结构体，该结构体保存了该数据类型所有的数据字段，并对应着一张数据表格。比如角色数据结构体，对应着一张数据表格，其数据信息包括角色ID、角色资源路径、角色种族、角色名字等。
+每个数据类型都包含一个主键字段，主键字段要求对于该数据类型必须全局唯一，游戏中可以通过主键去索引到某一条数据。比如在角色数据里，角色ID就是该类型的主键，通过角色ID，可以很容易找到一个角色的所有信息。
+在Unity代码里，所有数据类型都继承于ExcelBase<T, U>，其中T为其实现类类型本身，U为主键类型。这里可能有点绕，T为什么会是其实现类类型本身？因为我们不想为每个实现类在写一个管理类去管理该实现类的所有对象，通过实现类自身的静态方法就可以去管理和访问子类所有对象。
+代码如下。
+```cs
+public class ExcelBase<T, U> where T : IExcelLine<U>
+{
+	public static void Add(T excel) ...
+	public static void Remove(U id) ...
+	public static T Find(U id) ...
+	public static Dictionary<U, T>.Enumerator GetEnumerator() ...
+	public static void Clear() ...
+	
+	public static Dictionary<U, T> excelView;
+}
+```
+由代码可见，每一个数据类型同时是自己的管理者。例如角色数据类型的代码如下。
+```cs
+public class excel_cha_list : ExcelBase<excel_cha_list, int>, IExcelLine<int>
+{
+	public int id;
+	public string name;
+	public int type;
+	public int race;
+	public string path;
+	public float halfSize;
+	public string portrait;
+
+	public int GetPrimaryKey()
+	{
+		return id;
+	}
+}
+```
+如果想要增加一个角色数据怎么办？
+```cs
+excel_cha_list chaList = new excel_cha_list();
+chaList.id = 1001;
+chaList.name = "Arthas";
+chaList.type = CharacterType.NPC;
+chaList.race = CharacterRace.Undead;
+excel_cha_list.Add(chaList);
+```
+通过上述代码，我们就成功添加了一个角色，该角色为一个名为阿尔萨斯的不死族NPC，ID为1001
+再比如，如果想要查找一个角色怎么办？
+```cs
+excel_cha_list chaList = excel_cha_list.Find(1001);
+```
+通过上述代码，我们就成功取到ID为1001的角色的角色信息了。
