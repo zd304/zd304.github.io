@@ -59,10 +59,8 @@ excerpt_separator: '<!-- more -->'
 gems: [jekyll-paginate]
 paginate: 6
 
-gitment:
-  enable: true
-  githubID: zd304
-  repo: zd304.github.io
-  ClientID: b8f50a0f824d328cf4fa
-  ClientSecret: c1d8aabb397272fb0c9b3c4266d1fb9d0621d41a
-  lazy: true
+gitment_owner: zd304
+gitment_repo: zd304.github.io
+gitment_oauth:
+    client_id: b8f50a0f824d328cf4fa
+    client_secret: c1d8aabb397272fb0c9b3c4266d1fb9d0621d41a
