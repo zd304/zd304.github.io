@@ -22,6 +22,6 @@ type: page
 ## 框架&脚手架
 
 
-## Comments
+## 评论
 
 {% include comments.html %}
