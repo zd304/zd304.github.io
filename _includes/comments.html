@@ -1,17 +1,11 @@
 {% if site.gitment_repo %}
-<div id="gitmentContainer"></div>
-<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
-<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+<div id="vcomments"></div>
 <script>
-    var gitment = new Gitment({
-        id: '{{ page.date }}',
-        owner: '{{site.gitment_owner}}',
-        repo: '{{site.gitment_repo}}',
-        oauth: {
-            client_id: '{{site.gitment_oauth.client_id}}',
-            client_secret: '{{site.gitment_oauth.client_secret}}',
-        },
-    });
-    gitment.render('gitmentContainer')
+	new Valine({
+		el: '#vcomments',
+		appId: '{{ site.valine_appId }}',
+		appKey: '{{ site.valine_appKey }}'
+	})
 </script>
 {% endif %}
