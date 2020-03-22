@@ -11,9 +11,9 @@ type: page
 
 ## 工具
 
-* [box-shadow generator](http://www.cssmatic.com/box-shadow)
+* [Valine quickstart](https://valine.js.org/quickstart.html)
 
-    生成 box-shadow 的工具。
+    博客评论工具安装教程
 
 ## 编程语言
 
