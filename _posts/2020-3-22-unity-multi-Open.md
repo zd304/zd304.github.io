@@ -1,9 +1,9 @@
 ---
 layout: post
 title:  Unity多开工具
-categories: JavaScript
+categories: Unity
 tags: Unity 多开 Windows
-author: HyG
+author: zack.zhang
 ---
 
 * content

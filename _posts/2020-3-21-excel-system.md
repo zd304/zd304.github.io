@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Unity游戏表格配置方案"
-categories: C#
+categories: Unity
 tags: 游戏 Unity 表格 配置
 author: zack.zhang
 ---
