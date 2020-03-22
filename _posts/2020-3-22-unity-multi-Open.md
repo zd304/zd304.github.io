@@ -56,7 +56,7 @@ windows下有一个传感符号链接的工具，使用方式：MKLINK \[\[/D\] 
 
 鉴于此工具，我们可以用命令行创建一个当前工程的链接。例如当前工程路径为E:\MHCT\Client\MProject，我们可以创建一个空文件夹E:\MHCT_MKLINK，最后输入命令：
 
-```c
+```shell
 mklink /D E:\ProjectD\Client E:\ProjectD_MKLINK\Client
 ```
 
