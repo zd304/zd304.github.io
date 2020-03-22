@@ -15,7 +15,7 @@ author: HyG
 
 ## 多开思路
 
-windows下有一个传感符号链接的工具，使用方式：MKLINK \[\[\/D\] \| \[\/H\] \| \[\/J\]\] &lt;链接名称&gt; &lt;目标&gt;
+windows下有一个传感符号链接的工具，使用方式：MKLINK \[\[/D\] \| \[/H\] \| \[/J\]\] &lt;链接名称&gt; &lt;目标&gt;
 
 参数
 
@@ -28,15 +28,15 @@ windows下有一个传感符号链接的工具，使用方式：MKLINK \[\[\/D\]
   </thead>
   <tbody>
 	<tr>
-      <td>\/D</td>
+      <td>&#47;D</td>
       <td>创建目录符号链接。默认情况下，mklink会创建文件符号链接。</td>
     </tr>
 	<tr>
-      <td>\/H</td>
+      <td>&#47;H</td>
       <td>创建硬链接而不是符号链接。</td>
     </tr>
 	<tr>
-      <td>\/J"/td>
+      <td>&#47;J"/td>
       <td>创建目录连接。</td>
     </tr>
 	<tr>
@@ -48,7 +48,7 @@ windows下有一个传感符号链接的工具，使用方式：MKLINK \[\[\/D\]
       <td>指定新符号链接引用的路径（相对或绝对）。</td>
     </tr>
 	<tr>
-      <td>\/?</td>
+      <td>&#47;?</td>
       <td>在命令提示符下显示帮助。</td>
     </tr>
   </tbody>
@@ -56,7 +56,7 @@ windows下有一个传感符号链接的工具，使用方式：MKLINK \[\[\/D\]
 
 鉴于此工具，我们可以用命令行创建一个当前工程的链接。例如当前工程路径为E:\MHCT\Client\MProject，我们可以创建一个空文件夹E:\MHCT_MKLINK，最后输入命令：
 
-```
+```bat
 mklink /D E:\ProjectD\Client E:\ProjectD_MKLINK\Client
 ```
 
