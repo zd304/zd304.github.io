@@ -28,27 +28,27 @@ windows下有一个传感符号链接的工具，使用方式：MKLINK [[/D] | [
   </thead>
   <tbody>
 	<tr>
-      <td>/D</td>
+      <td>"/D"</td>
       <td>创建目录符号链接。默认情况下，mklink会创建文件符号链接。</td>
     </tr>
 	<tr>
-      <td>/H</td>
+      <td>"/H"</td>
       <td>创建硬链接而不是符号链接。</td>
     </tr>
 	<tr>
-      <td>/J</td>
+      <td>"/J"</td>
       <td>创建目录连接。</td>
     </tr>
 	<tr>
-      <td><链接名称></td>
+      <td>"<链接名称>"</td>
       <td>指定正在创建的符号链接的名称。</td>
     </tr>
 	<tr>
-      <td><目标></td>
+      <td>"<目标>"</td>
       <td>指定新符号链接引用的路径（相对或绝对）。</td>
     </tr>
 	<tr>
-      <td>/?</td>
+      <td>"/?"</td>
       <td>在命令提示符下显示帮助。</td>
     </tr>
   </tbody>
@@ -64,7 +64,7 @@ mklink /D E:\ProjectD\Client E:\ProjectD_MKLINK\Client
 
 但是有的时候并不需要把整个Unity工程文件夹链接过去，通常只需要链接Asstes、Packages和ProjectSettings三个文件夹即可。如果觉得每次都要输入三次bat指令很麻烦，可以自己写一个小工具来一键处理。
 
-这里附上一个自己开发的[小工具](https://github.com/zd304/UnityMultiOpen)
+这里附上一个自己开发的<a href="https://github.com/zd304/UnityMultiOpen">小工具</a>
 
 ## 总结
 
