@@ -78,6 +78,7 @@ author: zack.zhang
 
 ### 4. 消除浪费
 
+graph LR
 简单迭代 --> 探索更多思路
 
 无需后期翻新
@@ -116,6 +117,7 @@ author: zack.zhang
 
 ### 3. 客户端协作 > 合同谈判
 
+graph LR
 为避免延期 --> 避免多余的工作投入（如提升品质）
 
 需要灵活的里程碑定义
@@ -144,6 +146,9 @@ author: zack.zhang
 * 优化
 * 调优&打磨
 
+graph LR
 迭代结束 --> 回顾 --> 下个迭代调整目标
 
 目标不断调整
+
+![2.6](https://zd304.github.io/assets/img/scrum-2.6.png)<br/>
