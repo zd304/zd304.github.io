@@ -1,8 +1,8 @@
 ---
 layout: post
 title:  "《Scrum敏捷游戏开发》读书笔记-第二章"
-categories: Unity
-tags: 游戏 Unity 表格 配置
+categories: 管理
+tags: Scrum 敏捷开发 游戏开发
 author: zack.zhang
 ---
 
