@@ -32,7 +32,7 @@ Blinn-Phong高光是一种非常普遍的高光模型，渲染有时比Phong高�
 Blinn-Phong光照模型公式：
 
 ```glsl
-half3 specular = Ks * lightColor * pow(dot(N, H), shininess);
+half3 Is = Ks * lightColor * pow(dot(N, H), shininess);
 ```
 
 这个光照模型，可以反射出一片圆形高光，但是无法模拟头发反射出“天使环”高光。因此该模型不能直接用于头发渲染，需要在此基础上改进。
@@ -55,7 +55,7 @@ half3 specular = Ks * lightColor * pow(dot(N, H), shininess);
 
 基于Blinn-Phong高光的思想，同样使用的是半角向量，代码如下。
 
-```cg
+```glsl
 float StrandSpecular(float3 T, float3 V, float L, float exponent)
 {
 	float3 H = normalize(L + V);
@@ -94,3 +94,14 @@ float StrandSpecular(float3 T, float3 V, float L, float exponent)
 其中T为切线，L为灯光方向的反方向，通过T和L的平面可以确定一条法线N。N和L的夹角为θ，那么$$ N·L = cos(θ) $$。
 又由于N垂直于T，所以$$ N·L = sin(\frac{\pi}{2} - \theta) = \sqrt{1 - (L·T)^2}$$。
 
+同理可得，$$ N·H = \sqrt{1 - (H·T)^2} $$，代码表示如下。
+
+```glsl
+float sinTH = sqrt(1.0 - dotTH * dotTH);
+```
+
+由Blinn-Phong高光得出高光计算公式，代码表示如下。
+
+```glsl
+Is = pow(sinTH, exponent);
+```
