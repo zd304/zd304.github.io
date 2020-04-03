@@ -42,5 +42,53 @@ half3 specular = Ks * lightColor * pow(dot(N, H), shininess);
 
 由于头发是由无数发丝组成，每一根发丝可以看做一根非常细长的圆柱体，那么头发整体的高光就是由这每一根圆柱形发丝的高光组成的。
 
+为了表现每一根头发的高光我们需要做以下工作。
+
+### 1. 贴图
+
+![anisotropic](https://zd304.github.io/assets/img/hair_shift.jpg)<br/>
+
+头发颜色贴图（Base Map）、法线贴图（Normal Map），以及偏移贴图（Shift Map，如上图）。
+
+### 2. 高光
+
+基于Blinn-Phong高光的思想，同样使用的是半角向量，代码如下。
+
+```cg
+float StrandSpecular(float3 T, float3 V, float L, float exponent)
+{
+	float3 H = normalize(L + V);
+	float dotTH = dot(T, H);
+	float sinTH = sqrt(1.0 - dotTH * dotTH);
+	float dirAtten = smoothstep(-1.0, 0.0, dot(T, H));
+	
+	return dirAtten * pow(sinTH, exponent);
+}
+```
+
+#### 参数解释
+
+参数V指的是视线方向，参数L是灯光方向，参数exponent也就是Blinn-Phong高光中的shininess。
+
+重点要解释的是参数T，指的是模型切线（tangent）。
+
+![hair_tbn](https://zd304.github.io/assets/img/hair_tbn.jpg)<br/>
+
+上图展示了一个表面的三个向量：N-法线-Normal，T-切线-Tangent，B-副切线（副法线）-Bitangent（Binormal）。法线为垂直于表面的向量，切线为沿着<u>表面贴图UV坐标的V增长方向</u>的向量。
+
+因此美术制作头发贴图的时候，最好<u>发丝方向</u>和<u>UV坐标中V增长方向</u>保持一致。当然也可以不一致，但是需要多一张Flowmap贴图，美术可以使用<a href="https://krita.org/zh/">Krita</a>来制作Flowmap，该做法这里不赘述。
+
+#### 算法推导
+
+由于标准Blinn-Phong高光需要用到法线，然而每根圆柱体发丝的法线数量庞大，如下图所示。
+
 ![anisotropic](https://zd304.github.io/assets/img/anisotropic.png)<br/>
+
+如果要用法线计算高光就需要细分发丝表面，计算量巨大。然而我们发现垂直于法线的另外一个向量却是唯一的，也就是发丝延伸方向的向量，即切线，于是我们可以使用切线向量来模拟计算高光。
+
+通过方向光的方向向量，和切线方向，可以确定一条法线，如下图所示。
+
+![strand](https://zd304.github.io/assets/img/strand.png)<br/>
+
+其中T为切线，L为灯光方向的反方向，通过T和L的平面可以确定一条法线N。N和L的夹角为θ，那么N·L = cos(θ)。又由于N垂直于T，所以N·L = sin(\frac{π}{2} - θ)。
 
