@@ -92,15 +92,19 @@ float StrandSpecular(float3 T, float3 V, float L, float exponent)
 ![strand](https://zd304.github.io/assets/img/strand.png)<br/>
 
 其中T为切线，L为灯光方向的反方向，通过T和L的平面可以确定一条法线N。N和L的夹角为θ，那么可得如下公式。
+
 $$
 N·L = cos(θ)
 $$
+
 又由于N垂直于T，所以公式形式可以改为如下所示。
+
 $$
 N·L = sin(\frac{\pi}{2} - \theta) = \sqrt{1 - (L·T)^2}
 $$
 
 同理可得如下公式，即Blinn-Phong高光的基底N·H。
+
 $$
 N·H = \sqrt{1 - (H·T)^2}
 $$
