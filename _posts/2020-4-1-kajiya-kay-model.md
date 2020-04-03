@@ -73,7 +73,7 @@ float StrandSpecular(float3 T, float3 V, float L, float exponent)
 
 重点要解释的是参数T，指的是模型切线（tangent）。
 
-![hair_tbn](https://zd304.github.io/assets/img/hair_tbn.jpg)<br/>
+![hair_tbn](https://zd304.github.io/assets/img/hair_tbn.png)<br/>
 
 上图展示了一个表面的三个向量：N-法线-Normal，T-切线-Tangent，B-副切线（副法线）-Bitangent（Binormal）。法线为垂直于表面的向量，切线为沿着<u>表面贴图UV坐标的V增长方向</u>的向量。
 
