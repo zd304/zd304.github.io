@@ -4,6 +4,7 @@ title:  "基于Kajiya-Kay模型的毛发渲染"
 categories: 渲染
 tags: Unity 渲染 各向异性 毛发
 author: zack.zhang
+mathjax: true
 ---
 
 * content
@@ -90,10 +91,7 @@ float StrandSpecular(float3 T, float3 V, float L, float exponent)
 
 ![strand](https://zd304.github.io/assets/img/strand.png)<br/>
 
-其中T为切线，L为灯光方向的反方向，通过T和L的平面可以确定一条法线N。N和L的夹角为θ，那么
-$$
-N·L = cos(θ)
-$$
+其中T为切线，L为灯光方向的反方向，通过T和L的平面可以确定一条法线N。N和L的夹角为θ，那么$$ N·L = cos(θ) $$
 又由于N垂直于T，所以
 $$
 \frac{\pi}{2}
