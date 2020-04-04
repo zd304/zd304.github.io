@@ -10,7 +10,7 @@ mathjax: true
 * content
 {:toc}
 
-Kajiya-Kay Shading Model（卡吉雅模型）是一种经典的各向异性的头发渲染着色模型，《神秘海域4（Uncharted 4）》中的角色头发渲染就是在卡吉雅模型的基础上实现的。1997年，因为对毛发渲染的研究，Jim Kajiya和Timothy Kay一起获得奥斯卡技术认证整数。
+Kajiya-Kay Shading Model（卡吉雅模型）是一种经典的各向异性的头发渲染着色模型，《神秘海域4（Uncharted 4）》中的角色头发渲染就是在卡吉雅模型的基础上实现的。1997年，因为对毛发渲染的研究，Jim Kajiya和Timothy Kay一起获得奥斯卡技术认证证书。
 <!-- more -->
 
 <a href="http://amd-dev.wpengine.netdna-cdn.com/wordpress/media/2012/10/Scheuermann_HairRendering.pdf">原文传送门</a>
@@ -37,9 +37,9 @@ half3 Is = Ks * lightColor * pow(dot(N, H), shininess);
 
 这个光照模型，可以产生出一片圆形或者椭圆形的高光，但是无法模拟头发反射出“天使环”。因此该模型不能直接用于头发渲染，需要在此基础上改进。
 
-这里解释一下什么是“天使环”。“天使环”是对各项异性高光的一种俗称，因为各项异性高光的形状通常是一个环形高光，而且就出现在头顶，类似于西方神话里天使头顶的光环，所以把各向异性高光形象地称作“天使环”。
+这里解释一下什么是**“天使环”**。“天使环”是对各项异性高光的一种俗称，因为各项异性高光的形状通常是一个环形高光，而且就出现在头顶，类似于西方神话里天使头顶的光环，所以把各向异性高光形象地称作“天使环”。
 
-![angle_ring](https://zd304.github.io/assets/img/angle_ring.jpg)<br/>
+![angle_ring](https://zd304.github.io/assets/img/angel_ring.jpg)<br/>
 
 ## 各向异性材质
 
