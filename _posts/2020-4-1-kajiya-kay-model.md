@@ -39,7 +39,7 @@ half3 Is = Ks * lightColor * pow(dot(N, H), shininess);
 
 这里解释一下什么是“天使环”。“天使环”是对各项异性高光的一种俗称，因为各项异性高光的形状通常是一个环形高光，而且就出现在头顶，类似于西方神话里天使头顶的光环，所以把各向异性高光形象地称作“天使环”。
 
-![angle_ring](https://zd304.github.io/assets/img/angle_ring.png)<br/>
+![angle_ring](https://zd304.github.io/assets/img/angel_ring.png)<br/>
 
 ## 各向异性材质
 
