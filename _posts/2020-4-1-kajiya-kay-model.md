@@ -142,3 +142,51 @@ dirAtten是对高光的一个衰减系数，当半角向量与切线向量的夹
 ![strand](https://zd304.github.io/assets/img/dirAtten.jpg)<br/>
 
 如上图所示，如果半角向量H朝向红色平面以下，则高光亮度将会被减弱。
+
+### 3. 高光偏移
+
+如果根据上述公式，不经过任何偏移处理，我们会计算出一个非常规则的圆环型高光，如下图所示。
+
+![bleach_sf](https://zd304.github.io/assets/img/bleach_sf.png)<br/>
+
+但是由于发丝不是紧密的排布在同一个平面上的，现实生活中很难看到这种非常规则的圆环型高光，游戏中用得更多的其实是一种经过偏移计算后的W型高光，如下图所示。
+
+![bleach_sfyy](https://zd304.github.io/assets/img/bleach_sfyy.png)<br/>
+
+为了计算出这种W型高光，需要美术制作一张偏移贴图，也就是上文提到的Shift Map。
+
+为了实现高光沿着发丝方向偏移，我们让切线沿着法线偏移即可。如下图所示，如果沿着法线的正方向偏移，得到新的切线T'，那么T'和H确定的新法线N'将更加偏向发根方向，也就是说高光将会更加靠近发根；反之高光更加靠近发梢。
+
+![hair_shift](https://zd304.github.io/assets/img/hair_shift.png)<br/>
+
+总结起来就是：
+
+* 沿着法线正方向偏移切线，高光更加靠近发根
+* 沿着法线负方向偏移切线，高光更加靠近发梢
+
+那么为了取出的Shift Map值有正有负，代码可以如下实现。
+
+```glsl
+float shift = tex2D(tSpecShift, uv) - 0.5;
+```
+
+切线偏移方法代码可以如下实现。
+
+```glsl
+float3 ShiftTangent(float T, float N, float shift)
+{
+	float3 shiftedT = T + shift * N;
+	return normalize(shiftedT);
+}
+```
+
+## 总结
+
+至此，Kajiya-Kay模型已经全部推导完毕，卡吉雅模型是一种经验模型，是对头发高光的一种拟合模型，具体代码请参考ATI的文档《Scheuermann_HairRendering.pdf》。
+
+该渲染模型解决了以下问题：
+
+* 头发各项异性高光，即“天使环”效果
+* W型高光效果
+
+因为其计算简单而广为传播和使用，同时基于该模型演变出很多头发高光的解决方案。由于Kajiya-Kay模型是肉眼观察出来的模型，同时也是能量不守恒的，因此《GDC2004头发渲染和着色》提出了另一种头发渲染方式，我们将在后续博客详细介绍，让头发渲染更加趋近于真实。
