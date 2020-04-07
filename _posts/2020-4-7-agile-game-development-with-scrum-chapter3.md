@@ -19,15 +19,16 @@ author: zack.zhang
 
 PBI分解为任务实例
 
-<div class="mermaid">
-graph LR
-玩家跳跃功能
-动作：做动画【10h】
-程序：跳跃机制【5h】
-动作：调整动作【6h】
-玩家跳跃功能-->动作：做动画【10h】
-玩家跳跃功能-->程序：跳跃机制【5h】
-玩家跳跃功能-->动作：调整动作【6h】
+<div class="flow">
+<textarea class="flowcode">
+	st=>start:玩家跳跃功能
+	f1=>operation:动作：做动画【10h】
+	f2=>operation:程序：跳跃机制【5h】
+	f3=>operation:动作：调整动作【6h】
+	st->f1
+	st->f2
+	st->f3
+</textarea>
 </div>
 
 ### 2. Scrum原则
@@ -48,13 +49,13 @@ graph LR
 ## 二、Scrum组成
 
 ### 1. 产品Backlog
-		故事池
+故事池
 **每个Sprint后**
-	* 没预期到的PBI → 添加
-	* 不需要的PBI → 删除
-	* 优先级调整
+* 没预期到的PBI → 添加
+* 不需要的PBI → 删除
+* 优先级调整
 **Sprint前**
-	* 制定优先级
-	* 筛选评估PBI
-	* <u>分解成</u> 一个Sprint <u>能完成</u> 的 <u>特性</u>
+* 制定优先级
+* 筛选评估PBI
+* <u>分解成</u> 一个Sprint <u>能完成</u> 的 <u>特性</u>
 	
