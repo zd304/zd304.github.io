@@ -19,16 +19,11 @@ author: zack.zhang
 
 PBI分解为任务实例
 
-<div class="flow">
-<textarea class="flowcode">
-	st=>start:玩家跳跃功能
-	f1=>operation:动作：做动画【10h】
-	f2=>operation:程序：跳跃机制【5h】
-	f3=>operation:动作：调整动作【6h】
-	st->f1
-	st->f2
-	st->f3
-</textarea>
+<div class="mermaid">
+	graph LR
+	玩家跳跃功能-->动作：做动画【10h】
+	玩家跳跃功能-->动作：做动画【10h】
+	玩家跳跃功能-->动作：做动画【10h】
 </div>
 
 ### 2. Scrum原则
@@ -50,7 +45,7 @@ PBI分解为任务实例
 
 ### 1. 产品Backlog
 
-        故事池
+故事池
 
 **每个Sprint后**
 
