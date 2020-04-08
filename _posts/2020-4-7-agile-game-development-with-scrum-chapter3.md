@@ -25,6 +25,9 @@ PBI分解为任务实例
 	玩家跳跃功能-->动作：做动画【10h】
 	玩家跳跃功能-->动作：做动画【10h】
 </div>
+<script>
+	mermaid.initialize({startOnLoad:true});
+</script>
 
 ### 2. Scrum原则
 
