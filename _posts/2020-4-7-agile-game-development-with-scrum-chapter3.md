@@ -20,10 +20,10 @@ author: zack.zhang
 PBI分解为任务实例
 
 <div class="mermaid">
-	graph LR
-	玩家跳跃功能-->动作：做动画【10h】
-	玩家跳跃功能-->动作：做动画【10h】
-	玩家跳跃功能-->动作：做动画【10h】
+	graph LR;
+	玩家跳跃功能-->动作：做动画【10h】;
+	玩家跳跃功能-->动作：做动画【10h】;
+	玩家跳跃功能-->动作：做动画【10h】;
 </div>
 <script>
 	mermaid.initialize({startOnLoad:true});
