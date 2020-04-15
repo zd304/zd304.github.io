@@ -10,8 +10,6 @@ mathjax: true
 * content
 {:toc}
 
-\usepackage{bm}
-
 <!-- more -->
 
 ![ray-triangle](https://zd304.github.io/assets/img/ray-triangle.png)<br/>
@@ -53,7 +51,7 @@ D = \begin{vmatrix}
 x_{E1} & x_{E2} & -x_D \\
 y_{E1} & y_{E2} & -y_D \\
 z_{E1} & z_{E2} & -z_D \\
-\end{vmatrix} = \begin{vmatrix} \bm{E_1} & \bm{E_2} & -\bm{D}\\ \end{vmatrix}
+\end{vmatrix} = \begin{vmatrix} \bf{E_1} & \bf{E_2} & -\bf{D}\\ \end{vmatrix}
 $$
 
 $$
