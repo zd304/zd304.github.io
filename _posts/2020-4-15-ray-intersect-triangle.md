@@ -10,6 +10,8 @@ mathjax: true
 * content
 {:toc}
 
+\usepackage{bm}
+
 <!-- more -->
 
 ![ray-triangle](https://zd304.github.io/assets/img/ray-triangle.png)<br/>
@@ -51,7 +53,7 @@ D = \begin{vmatrix}
 x_{E1} & x_{E2} & -x_D \\
 y_{E1} & y_{E2} & -y_D \\
 z_{E1} & z_{E2} & -z_D \\
-\end{vmatrix} = \begin{vmatrix} \textbf{E<sub>1</sub>} & \textbf{E<sub>2</sub>} & -\textbf{D}\\ \end{vmatrix}
+\end{vmatrix} = \begin{vmatrix} \bm{E_1} & \bm{E_2} & -\bm{D}\\ \end{vmatrix}
 $$
 
 $$
@@ -78,4 +80,4 @@ z_{E1} & z_{E2} & z_T \\
 \end{vmatrix} = \begin{vmatrix} \textbf{E_1} & \textbf{E_2} & \textbf{T}\\ \end{vmatrix}
 $$
 
-又根据混合积公式$$\begin{vmatrix} \textbf{A} & \textbf{B} & \textbf{C}\\ \end{vmatrix} = textbf{A} × textbf{B} · \textbf{C} = -textbf{A} × \textbf{C} · textbf{B}$$
+又根据混合积公式$$\begin{vmatrix} \textbf{A} & \textbf{B} & \textbf{C}\\ \end{vmatrix} = \textbf{A} × \textbf{B} · \textbf{C} = -\textbf{A} × \textbf{C} · \textbf{B}$$
