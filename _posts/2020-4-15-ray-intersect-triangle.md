@@ -18,3 +18,9 @@ mathjax: true
 
 设射线和三角面的交点为P，那么P = O + Dt = u(V<sub>1</sub> - V<sub>0</sub>) + v(V<sub>2</sub> - V<sub>0</sub>) + V<sub>0</sub>。
 
+∴ u(V<sub>1</sub> - V<sub>0</sub>) + v(V<sub>2</sub> - V<sub>0</sub>) - Dt = O - V<sub>0</sub>。
+
+设 E<sub>1</sub> = V<sub>1</sub> - V<sub>0</sub>，E<sub>2</sub> = V<sub>2</sub> - V<sub>0</sub>，T = O - V<sub>0</sub>。
+
+可得 uE<sub>1</sub> + vE<sub>2</sub> - Dt = T。
+
