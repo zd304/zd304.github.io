@@ -51,5 +51,5 @@ D = \begin{vmatrix}
 x_{E1} & x_{E2} & -x_D \\
 y_{E1} & y_{E2} & -y_D \\
 z_{E1} & z_{E2} & -z_D \\
-\end{vmatrix} = \begin{vmatrix} **E_1** & **E_2** & -**D** \end{vmatrix}
+\end{vmatrix} = \begin{vmatrix} **E_1** & **E_2** & -**D**\\ \end{vmatrix}
 $$
