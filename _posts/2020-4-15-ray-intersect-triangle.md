@@ -51,7 +51,7 @@ D = \begin{vmatrix}
 x_{E1} & x_{E2} & -x_D \\
 y_{E1} & y_{E2} & -y_D \\
 z_{E1} & z_{E2} & -z_D \\
-\end{vmatrix} = \begin{vmatrix} \bf{E_1} & \bf{E_2} & -\bf{D}\\ \end{vmatrix}
+\end{vmatrix} = \begin{vmatrix} \bf{\sf{E_1}} & \bf{\sf{E_2}} & -\bf{\sf{D}}\\ \end{vmatrix}
 $$
 
 $$
@@ -59,7 +59,7 @@ D_1 = \begin{vmatrix}
 x_T & x_{E2} & -x_D \\
 y_T & y_{E2} & -y_D \\
 z_T & z_{E2} & -z_D \\
-\end{vmatrix} = \begin{vmatrix} \textbf{T} & \textbf{E_2} & -\textbf{D}\\ \end{vmatrix}
+\end{vmatrix} = \begin{vmatrix} \bf{T} & \bf{E_2} & -\bf{D}\\ \end{vmatrix}
 $$
 
 $$
@@ -67,7 +67,7 @@ D_2 = \begin{vmatrix}
 x_{E1} & x_T & -x_D \\
 y_{E1} & y_T & -y_D \\
 z_{E1} & z_T & -z_D \\
-\end{vmatrix} = \begin{vmatrix} \textbf{E_1} & \textbf{T} & -\textbf{D}\\ \end{vmatrix}
+\end{vmatrix} = \begin{vmatrix} \bf{E_1} & \bf{T} & -\bf{D}\\ \end{vmatrix}
 $$
 
 $$
@@ -75,7 +75,7 @@ D_3 = \begin{vmatrix}
 x_{E1} & x_{E2} & x_T \\
 y_{E1} & y_{E2} & y_T \\
 z_{E1} & z_{E2} & z_T \\
-\end{vmatrix} = \begin{vmatrix} \textbf{E_1} & \textbf{E_2} & \textbf{T}\\ \end{vmatrix}
+\end{vmatrix} = \begin{vmatrix} \bf{E_1} & \bf{E_2} & \bf{T}\\ \end{vmatrix}
 $$
 
-又根据混合积公式$$\begin{vmatrix} \textbf{A} & \textbf{B} & \textbf{C}\\ \end{vmatrix} = \textbf{A} × \textbf{B} · \textbf{C} = -\textbf{A} × \textbf{C} · \textbf{B}$$
+又根据混合积公式$$\begin{vmatrix} \bf{A} & \bf{B} & \bf{C}\\ \end{vmatrix}$$ = **A** × **B** · **C** = -**A** × **C** · **B**。
