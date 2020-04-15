@@ -98,8 +98,8 @@ D<sub>3</sub> = **T** × **E<sub>1</sub>** · **E<sub>2</sub>**
 
 得到最终公式：
 
-u = $$\frac{\bf{P} · \bf{T}}{\bf{P} · \bf{E<sub>1</sub>}}$$
+u = $$\frac{\bf{P} · \bf{T}}{\bf{P} · \bf{E_1}}$$
 
-v = $$\frac{\bf{Q} · \bf{D}}{\bf{P} · \bf{E<sub>1</sub>}}$$
+v = $$\frac{\bf{Q} · \bf{D}}{\bf{P} · \bf{E_1}}$$
 
-t = $$\frac{\bf{Q} · \bf{E<sub>2</sub>}}{\bf{P} · \bf{E<sub>1</sub>}}$$
+t = $$\frac{\bf{Q} · \bf{E_2}}{\bf{P} · \bf{E_1}}$$
