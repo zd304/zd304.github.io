@@ -51,7 +51,7 @@ D = \begin{vmatrix}
 x_{E1} & x_{E2} & -x_D \\
 y_{E1} & y_{E2} & -y_D \\
 z_{E1} & z_{E2} & -z_D \\
-\end{vmatrix} = \begin{vmatrix} \mathtt{E_1} & \mathtt{E_2} & -\mathtt{D}\\ \end{vmatrix}
+\end{vmatrix} = \begin{vmatrix} \text{**E_1**} & \text{**E_2**} & -\text{**D**}\\ \end{vmatrix}
 $$
 
 $$
