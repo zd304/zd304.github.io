@@ -44,14 +44,14 @@ $$v = \frac{D_2}{D}$$
 
 $$t = \frac{D_3}{D}$$
 
-又∵
+即
 
 $$
 D = \begin{vmatrix}
 x_{E1} & x_{E2} & -x_D \\
 y_{E1} & y_{E2} & -y_D \\
 z_{E1} & z_{E2} & -z_D \\
-\end{vmatrix} = \begin{vmatrix} \textbf{E_1} & \textbf{E_2} & -\textbf{D}\\ \end{vmatrix}
+\end{vmatrix} = \begin{vmatrix} \textbf{E<sub>1</sub>} & \textbf{E<sub>2</sub>} & -\textbf{D}\\ \end{vmatrix}
 $$
 
 $$
@@ -59,7 +59,7 @@ D_1 = \begin{vmatrix}
 x_T & x_{E2} & -x_D \\
 y_T & y_{E2} & -y_D \\
 z_T & z_{E2} & -z_D \\
-\end{vmatrix} = \begin{vmatrix} \mathtt{T} & \mathtt{E_2} & -\mathtt{D}\\ \end{vmatrix}
+\end{vmatrix} = \begin{vmatrix} \textbf{T} & \textbf{E_2} & -\textbf{D}\\ \end{vmatrix}
 $$
 
 $$
@@ -67,7 +67,7 @@ D_2 = \begin{vmatrix}
 x_{E1} & x_T & -x_D \\
 y_{E1} & y_T & -y_D \\
 z_{E1} & z_T & -z_D \\
-\end{vmatrix} = \begin{vmatrix} \mathtt{E_1} & \mathtt{T} & -\mathtt{D}\\ \end{vmatrix}
+\end{vmatrix} = \begin{vmatrix} \textbf{E_1} & \textbf{T} & -\textbf{D}\\ \end{vmatrix}
 $$
 
 $$
@@ -75,5 +75,7 @@ D_3 = \begin{vmatrix}
 x_{E1} & x_{E2} & x_T \\
 y_{E1} & y_{E2} & y_T \\
 z_{E1} & z_{E2} & z_T \\
-\end{vmatrix} = \begin{vmatrix} \mathtt{E_1} & \mathtt{E_2} & \mathtt{T}\\ \end{vmatrix}
+\end{vmatrix} = \begin{vmatrix} \textbf{E_1} & \textbf{E_2} & \textbf{T}\\ \end{vmatrix}
 $$
+
+又根据混合积公式$$\begin{vmatrix} \textbf{A} & \textbf{B} & \textbf{C}\\ \end{vmatrix} = textbf{A} × textbf{B} · \textbf{C} = -textbf{A} × \textbf{C} · textbf{B}$$
