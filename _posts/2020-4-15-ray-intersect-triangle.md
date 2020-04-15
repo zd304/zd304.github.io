@@ -28,6 +28,9 @@ mathjax: true
 
 那么联立做方程组：
 
-$$
-\begin{array}{c} {ux<sub>e1</sub> + vx<sub>e2</sub> - x<sub>d</sub>t = x<sub>t</sub>}\\{uy<sub>e1</sub> + vy<sub>e2</sub> - y<sub>d</sub>t = y<sub>t</sub>}\\{uz<sub>e1</sub> + vz<sub>e2</sub> - z<sub>d</sub>t = z<sub>t</sub>} \end{array}
+$$\begin{cases}
+ux_{e1} + vx_{e2} - x_d{t} = x_t\\
+uy<sub>e1</sub> + vy<sub>e2</sub> - y<sub>d</sub>t = y<sub>t</sub>\\
+uz<sub>e1</sub> + vz<sub>e2</sub> - z<sub>d</sub>t = z<sub>t</sub>\\
+ \end{cases}
 $$
