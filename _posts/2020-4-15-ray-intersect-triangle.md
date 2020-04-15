@@ -93,7 +93,13 @@ D<sub>3</sub> = **T** × **E<sub>1</sub>** · **E<sub>2</sub>**
 设
 
 **P** = **D** × **E<sub>2</sub>**
+
 **Q** = **T** × **E<sub>1</sub>**
 
 得到最终公式：
 
+u = $$\frac{**P** · **T**}{**P** · **E<sub>1</sub>**}$$
+
+v = $$\frac{**Q** · **D**}{**P** · **E<sub>1</sub>**}$$
+
+t = $$\frac{**Q** · **E<sub>2</sub>**}{**P** · **E<sub>1</sub>**}$$
