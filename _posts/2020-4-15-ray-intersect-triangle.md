@@ -51,7 +51,7 @@ D = \begin{vmatrix}
 x_{E1} & x_{E2} & -x_D \\
 y_{E1} & y_{E2} & -y_D \\
 z_{E1} & z_{E2} & -z_D \\
-\end{vmatrix} = \begin{vmatrix} \textbf{\sf{E_1}} & \textbf{\sf{E_2}} & -\textbf{\sf{D}}\\ \end{vmatrix}
+\end{vmatrix} = \begin{vmatrix} \bf{E_1} & \bf{E_2} & -\bf{D}\\ \end{vmatrix}
 $$
 
 $$
@@ -78,4 +78,22 @@ z_{E1} & z_{E2} & z_T \\
 \end{vmatrix} = \begin{vmatrix} \bf{E_1} & \bf{E_2} & \bf{T}\\ \end{vmatrix}
 $$
 
-又根据混合积公式$$\begin{vmatrix} \bf{A} & \bf{B} & \bf{C}\\ \end{vmatrix}$$ = **A** × **B** · **C** = -**A** × **C** · **B**。
+又根据混合积公式$$\begin{vmatrix} \bf{A} & \bf{B} & \bf{C}\\ \end{vmatrix}$$ = **A** × **B** · **C** = -**A** × **C** · **B**
+
+得
+
+D = **D** × **E<sub>2</sub>** · **E<sub>1</sub>**
+
+D<sub>1</sub> = **D** × **E<sub>2</sub>** · **T**
+
+D<sub>2</sub> = **T** × **E<sub>1</sub>** · **D**
+
+D<sub>3</sub> = **T** × **E<sub>1</sub>** · **E<sub>2</sub>**
+
+设
+
+**P** = **D** × **E<sub>2</sub>**
+**Q** = **T** × **E<sub>1</sub>**
+
+得到最终公式：
+
