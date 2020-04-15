@@ -12,6 +12,8 @@ mathjax: true
 
 <!-- more -->
 
+（下文中粗体代表向量）
+
 ![ray-triangle](https://zd304.github.io/assets/img/ray-triangle.png)<br/>
 
 射线通常由起点和方向两部分数据组成，射线上的某个点表示为P<sub>ray</sub> = O + **D**t。
