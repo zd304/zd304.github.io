@@ -24,3 +24,10 @@ mathjax: true
 
 可得 uE<sub>1</sub> + vE<sub>2</sub> - Dt = T。
 
+再设 E<sub>1</sub>(x<sub>e1</sub>, y<sub>e1</sub>, z<sub>e1</sub>)，E<sub>2</sub>(x<sub>e2</sub>, y<sub>e2</sub>, z<sub>e2</sub>)，D(x<sub>d</sub>, y<sub>d</sub>, z<sub>d</sub>)，T(x<sub>t</sub>, y<sub>t</sub>, z<sub>t</sub>)。
+
+那么联立做方程组：
+
+$$
+\begin{array}{c} {ux<sub>e1</sub> + vx<sub>e2</sub> - x<sub>d</sub>t = x<sub>t</sub>}\\{uy<sub>e1</sub> + vy<sub>e2</sub> - y<sub>d</sub>t = y<sub>t</sub>}\\{uz<sub>e1</sub> + vz<sub>e2</sub> - z<sub>d</sub>t = z<sub>t</sub>} \end{array}
+$$
