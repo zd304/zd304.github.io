@@ -29,8 +29,8 @@ mathjax: true
 那么联立做方程组：
 
 $$\begin{cases}
-ux_{e1} + vx_{e2} - x_d{t} = x_t\\
-uy<sub>e1</sub> + vy<sub>e2</sub> - y<sub>d</sub>t = y<sub>t</sub>\\
-uz<sub>e1</sub> + vz<sub>e2</sub> - z<sub>d</sub>t = z<sub>t</sub>\\
+x_{e1}u + x_{e2}v - x_d{t} = x_t\\
+y_{e1}u + y_{e2}v - y_d{t} = y_t\\
+z_{e1}u + z_{e2}v - z_d{t} = z_t\\
  \end{cases}
 $$
