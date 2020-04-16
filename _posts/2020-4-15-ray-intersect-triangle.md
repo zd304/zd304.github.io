@@ -107,3 +107,67 @@ u = $$\frac{\bf{P} · \bf{T}}{\bf{P} · \bf{E_1}}$$
 v = $$\frac{\bf{Q} · \bf{D}}{\bf{P} · \bf{E_1}}$$
 
 t = $$\frac{\bf{Q} · \bf{E_2}}{\bf{P} · \bf{E_1}}$$
+
+代码如下：
+
+```cpp
+bool IntersectTriangle(const Vector3& orig, const Vector3& dir,
+		Vector3& v0, Vector3& v1, Vector3& v2,
+		float* t, float* u, float* v)
+{
+	// E1
+	Vector3 E1 = v1 - v0;
+	
+	// E2
+	Vector3 E2 = v2 - v0;
+	
+	// P
+	Vector3 P = dir.Cross(E2);
+	
+	// determinant - P·E1
+	// 根据混合积公式的几何意义，det是E1&E2&OP组成的平行四边体的有向体积。
+	float det = E1.Dot(P);
+	
+	// 保证det > 0, 响应的修改T。
+	Vector3 T;
+	if (det > 0)
+	{
+		T = orig - v0;
+	}
+	else
+	{
+		T = v0 - orig;
+		det = -det;
+	}
+	
+	// 如果determinant接近0，也就是有向体积接近0，就说明射线和E1&E2平面共面。
+	if (det < 0.0001f)
+	{
+		return false;
+	}
+	
+	*u = Vector3::Dot(T, P);
+	if (*u < 0.0f || *u > det)
+	{
+		return false;
+	}
+	
+	// Q
+	Vector3 Q = Vector3::Cross(T, E1);
+	
+	*v = Vector3::Dot(dir, Q);
+	if (*v < 0.0f || *u + *v > det)
+	{
+		return false;
+	}
+	
+	*t = Vector3::Dot(E2, Q);
+	
+	float invD = 1.0f / det;
+	*t *= invD;
+	*u *= invD;
+	*v *= invD;
+	
+	return true;
+}
+```
