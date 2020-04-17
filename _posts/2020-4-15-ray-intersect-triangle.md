@@ -171,3 +171,5 @@ bool IntersectTriangle(const Vector3& orig, const Vector3& dir,
 	return true;
 }
 ```
+
+实际应用可参考：<a href="https://github.com/zd304/NavSystem/blob/master/Src/NavPhysics.cpp">github传送门</a>
