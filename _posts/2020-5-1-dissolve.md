@@ -53,7 +53,7 @@ o.worldFactor = posOffset;
 
 最终在片段着色器里如下实现即可。
 
-```glsls
+```glsl
 fixed dissove = tex2D(_DissTex, i.uv).r;
 dissove = (dissove - _Clip) + i.worldFactor * _WorldSpaceScale;
 clip(dissove);
