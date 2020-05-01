@@ -21,7 +21,7 @@ author: zack.zhang
 
 为了实现这种效果，我们需要标记哪些像素要显示，哪些像素要消失，于是使用一张噪声图来给每一个像素做标记（Mask）。如下图所示，这个噪声图就是在Photoshop里用“云彩”工具生成的。由于噪声图的随机性，使得像素的显示和消失显得非常不规则，也就满足了对不规则溶解效果的需求。
 
-![dissolve_noise](https://github.com/zd304/Dissolve/blob/master/Assets/Textures/mask2.png)
+![mask2](https://zd304.github.io/assets/img/mask2.png)<br/>
 
 在shader中“抠掉”一个像素，可以使用clip函数。在片段着色器中调用clip(x)即可丢弃这个像素，其中x为数字，当x小于0.0，该像素则会被丢弃。
 
@@ -73,7 +73,7 @@ dissove = dissove + dist * _WorldSpaceScale;
 
 本文实现的效果如下。
 
-![screenshot1](https://github.com/zd304/Dissolve/blob/master/Example/6.gif)
+![screenshot1](https://zd304.github.io/assets/img/dissolve_screenshot.gif)
 
 该文章总结了以下知识点。
 
