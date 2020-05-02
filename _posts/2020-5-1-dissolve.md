@@ -1,7 +1,7 @@
 ---
 layout: post
-title:  小玩具：Unity溶解效果（Dissolve）
-categories: Unity
+title:  Unity小工具：Unity溶解效果（Dissolve）
+categories: Unity小工具
 tags: 溶解 Dissolve Unity
 author: zack.zhang
 ---
