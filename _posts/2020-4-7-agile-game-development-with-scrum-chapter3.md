@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "《Scrum敏捷游戏开发》读书笔记-第三章"
+title:  "《Scrum敏捷游戏开发》读书笔记-第三章-关于Scrum"
 categories: 管理
 tags: Scrum 敏捷开发 游戏开发
 author: zack.zhang
