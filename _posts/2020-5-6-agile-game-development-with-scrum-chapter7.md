@@ -103,15 +103,15 @@ author: zack.zhang
 
 &ensp;&ensp;&ensp;&ensp;解决方案：
 
-&ensp;&ensp;&ensp;&ensp;① 消灭批量工作
+&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;① 消灭批量工作
 
-&ensp;&ensp;&ensp;&ensp;② 合理的缓冲值预估
+&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;② 合理的缓冲值预估
 
 （2）减少浪费
 
 &ensp;&ensp;&ensp;&ensp;问题：浪费时间在不创造价值的事情上
 
-&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;如：等待导出、等待审核
+&ensp;&ensp;&ensp;&ensp;> 如：等待导出、等待审核
 
 &ensp;&ensp;&ensp;&ensp;解决方案：时间窗 → 压力 → 迫使寻找更有效工作方式
 
