@@ -37,14 +37,14 @@ author: zack.zhang
 
 &ensp;&ensp;&ensp;&ensp;完成的故事 → 衡量敏捷项目速率
 	
-	故事研讨会上，**预估**包含：
+&ensp;&ensp;&ensp;&ensp;故事研讨会上，**预估**包含：
 	
-	（1）专家意见：支持的各部门
+&ensp;&ensp;&ensp;&ensp;（1）专家意见：支持的各部门
 	
-	（2）类推：一个故事与另一个的复杂程度
+&ensp;&ensp;&ensp;&ensp;（2）类推：一个故事与另一个的复杂程度
 	
-	（3）了解：适当细分故事（不应太细）
+&ensp;&ensp;&ensp;&ensp;（3）了解：适当细分故事（不应太细）
 	
-	对故事点做预估
-	
-	用**计划扑克**
+&ensp;&ensp;&ensp;&ensp;对故事点做预估
+
+&ensp;&ensp;&ensp;&ensp;用**计划扑克**
