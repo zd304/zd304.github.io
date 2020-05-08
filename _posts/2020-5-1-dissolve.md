@@ -49,7 +49,7 @@ float posOffset = dot(normalize(_DissolveDir), pos);
 o.worldFactor = posOffset;
 ```
 
-其中rootPos为物体质心所在的坐标值，因为世界变换矩阵的w行向量即为世界位置（详细请搜索世界矩阵介绍和推导相关文章）。worldPos为当前顶点所处世界位置。那么worldPos - rootPos就可以求得顶点偏离模型质心的偏移向量，最后偏移向量在_DissolveDir方向上的投影长度就是我们所需要的方向因子，因为投影越长，那么在_DissolveDir方向上像素离质心越远。
+其中rootPos为物体质心所在的坐标值，因为世界变换矩阵的w行向量即为世界位置（详细请搜索世界矩阵介绍和推导相关文章）。worldPos为当前顶点所处世界位置，在Unity里需要注意这里不允许动态合批，否则worldPos就失效了。那么worldPos - rootPos就可以求得顶点偏离模型质心的偏移向量，最后偏移向量在_DissolveDir方向上的投影长度就是我们所需要的方向因子，因为投影越长，那么在_DissolveDir方向上像素离质心越远。
 
 最终在片段着色器里如下实现即可。
 
