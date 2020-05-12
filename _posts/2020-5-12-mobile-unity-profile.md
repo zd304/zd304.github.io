@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  Unity小工具：Unity溶解效果（Dissolve）
+title:  Unity上测试手机性能
 categories: Unity小工具
 tags: 溶解 Dissolve Unity
 author: zack.zhang
@@ -8,6 +8,8 @@ author: zack.zhang
 
 * content
 {:toc}
+
+<!-- more -->
 
 ![mobile_unity_profile_taskkill](https://zd304.github.io/assets/img/mobile_unity_profile_taskkill.png)<br/>
 
