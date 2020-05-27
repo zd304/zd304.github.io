@@ -59,13 +59,19 @@ COSBrowser的操作很傻瓜，很像百度网盘之类的东西，就不再赘�
 
 下载文档里的<a href="https://cos-sdk-archive-1253960454.file.myqcloud.com/qcloud-sdk-dotnet/latest/qcloud-sdk-dotnet.zip?_ga=1.216336144.766970255.1590125456">SDK</a>，我下载的版本是5.4.9。
 
-下载下来后，会发现有一个C#工程，工程文件地址为qcloud-sdk-dotnet-5.4.9/qcloud-sdk-dotnet-5.4.9/QCloudCSharpSDK/QCloudCSharpSDK.sln。
+下载下来后，会发现有一个C#工程，例如我本地的工程文件地址为 D:/QCloudSDK/qcloud-sdk-dotnet-5.4.9/QCloudCSharpSDK/QCloudCSharpSDK.sln。
 
 接下来的用法，如果是Unity的老用户就很熟悉了，要么把C#代码直接放到Unity工程里，要么把工程编译成DLL放到工程Plugins下即可。我选择了编译DLL。
 
 最后，根据.NET SDK文档的介绍来敲代码吧。
 
 ```cs
+using COSXML;
+using COSXML.Auth;
+using COSXML.Model.Object;
+using COSXML.Model.Bucket;
+using COSXML.CosException;
+using COSXML.Model.Service;
 using COSXML.Utils;
 using System.Collections.Generic;
 using COSXML.Model.Tag;
