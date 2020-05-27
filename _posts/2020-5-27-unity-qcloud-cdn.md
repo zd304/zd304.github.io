@@ -122,7 +122,7 @@ public class TestQCloud
                 Debug.Log("++++++++++++ " + result.GetResultInfo());
             }
             {
-                string bucket = "nwrz-1251000000"; //存储桶，格式：BucketName-APPID
+                string bucket = "example-1251000000"; //存储桶，格式：BucketName-APPID
                 string key = "test/logo.jpg"; //对象在存储桶中的位置，即称对象键
                 string localDir = Application.persistentDataPath + "/Archive";//本地文件夹
                 Debug.Log("************ dir: " + localDir);
