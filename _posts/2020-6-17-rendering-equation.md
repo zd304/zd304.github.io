@@ -90,8 +90,6 @@ $$
 
 如果光通量Φ均匀的分布（各项同性）在被照面S上，那么$$E = \frac{Φ}{S}$$。
 
-![illuminance](https://zd304.github.io/assets/img/rendering-equation/illuminance.png)<br/>
-
 由于球体表面积$$S = 4πr^2$$，因此对于各向同性的光源来说可得
 
 $$
