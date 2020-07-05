@@ -273,4 +273,6 @@ $$ω_i·n$$是入射角带来的入射光衰减。
 
 ![re](https://zd304.github.io/assets/img/rendering-equation/re.png)<br/>
 
+## 引用
+
 \[1\] Kajiya, James T. (1986), "The rendering equation", Siggraph 1986: 143–150, doi:10.1145/15922.15902, ISBN 978-0-89791-196-2
