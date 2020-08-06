@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  Unity ECS 文档 —— 组件
+title:  Unity ECS 文档 —— 系统
 categories: Unity
 tags: DOTS Unity ECS
 author: zack.zhang
