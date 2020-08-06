@@ -27,7 +27,7 @@ ECS中的组件是一个结构体，它具有以下“标记接口”中的一�
 
 * <a href="">ISharedSystemStateComponentData</a>——共享数据和系统状态数据的组合。参见系统状态组件。参见系统状态组件（System State Components）。
 
-* <a href="">Blob assets</a>——虽然从技术上讲不是一个“组件”，但你可以使用Blob assets来存储数据。Blob assets可以由使用<a href="">BBlobAssetReference</a>的一个或多个组件引用，并且是不可变的。您可以使用blob资产在资产之间共享数据，并在c# Job中访问该数据。
+* <a href="">Blob assets</a>——虽然从技术上讲不是一个“组件”，但你可以使用Blob assets来存储数据。Blob assets可以由使用<a href="">BBlobAssetReference</a>的一个或多个组件引用，并且是不可变的。您可以使用Blob assets在资产之间共享数据，并在c# Job中访问该数据。
 
 EntityManager将组件的独特组合组织为原型。它将具有相同原型的所有实体的组件一起存储在称为块（chunks）的内存块中，给定块中的实体都具有相同的组件原型。
 
