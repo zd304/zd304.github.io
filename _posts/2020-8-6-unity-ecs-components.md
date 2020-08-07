@@ -17,7 +17,7 @@ author: zack.zhang
 
 ECS中的组件是一个结构体，它具有以下“标记接口”中的一个:
 
-* <a href="">IComponentData</a>——用于一般用途和\[chunk components\]。
+* <a href="https://zd304.github.io/2020/08/07/unity-ecs-icomponent_data/">IComponentData</a>——用于一般用途和\[chunk components\]。
 
 * <a href="">IBufferElementData</a>——将[dynamic buffers]与一个实体关联。
 
