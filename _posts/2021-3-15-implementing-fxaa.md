@@ -60,7 +60,7 @@ float rgb2luma(vec3 rgb) {
 
 注意，当在相同大小的窗口中显示渲染的场景纹理时，使用的过滤方法不会修改它的外观。它只会影响在FXAA计算中读取的值，我们将选择双线性滤波来得到自由的插值。
 
-## 一步一步进行
+## 一步一步计算
 
 唯一需要的输入是screenTexture，片段的UV坐标In.uv，和窗口尺寸的倒数inverseScreenSize (1.0/width, 1.0/height)；唯一的输出是RGB颜色矢量fragColor。
 
@@ -101,6 +101,100 @@ if(lumaRange < max(EDGE_THRESHOLD_MIN,lumaMax * EDGE_THRESHOLD_MAX)) {
 这两个全大写常量的推荐值为EDGE_THRESHOLD_MIN = 0.0312和EDGE_THRESHOLD_MAX = 0.125。
 
 对于我们的示例像素，最小值是0，最大值是1，因此范围是1，由于我们有1.0 > max(1 \* 0.125, 0.0312)，我们将执行AA。
+
+### 估计梯度和选择边的方向
+
+然后，对于检测到的边缘的每个像素，我们检查边缘是垂直的还是水平的。为此，使用中央亮度和8个相邻像素的亮度计算一系列的局部差值，在水平和垂直方向都使用以下公式:
+
+* 水平方向梯度：[(upleft - left) - (left - downleft)] + 2 \* [(up - center) - (center - down)] + [(upright - right) - (right - downright)]
+
+* 垂直方向梯度：[(upright - up) - (up - upleft)] + 2 \* [(right - center) - (center - left)] + [(downright - down) - (down - downleft)]
+
+以上两个量中最大的一个将得出边的主要方向。
+
+```glsl
+// 查询剩余的4个角的亮度。
+float lumaDownLeft = rgb2luma(textureOffset(screenTexture,In.uv,ivec2(-1,-1)).rgb);
+float lumaUpRight = rgb2luma(textureOffset(screenTexture,In.uv,ivec2(1,1)).rgb);
+float lumaUpLeft = rgb2luma(textureOffset(screenTexture,In.uv,ivec2(-1,1)).rgb);
+float lumaDownRight = rgb2luma(textureOffset(screenTexture,In.uv,ivec2(1,-1)).rgb);
+
+// 合并四条边的亮度（使用中间变量为未来计算相同的值）。
+float lumaDownUp = lumaDown + lumaUp;
+float lumaLeftRight = lumaLeft + lumaRight;
+
+// 角落同样的处理
+float lumaLeftCorners = lumaDownLeft + lumaUpLeft;
+float lumaDownCorners = lumaDownLeft + lumaDownRight;
+float lumaRightCorners = lumaDownRight + lumaUpRight;
+float lumaUpCorners = lumaUpRight + lumaUpLeft;
+
+// 沿水平和垂直轴向计算梯度的估计值。
+float edgeHorizontal =  abs(-2.0 * lumaLeft + lumaLeftCorners)  + abs(-2.0 * lumaCenter + lumaDownUp ) * 2.0    + abs(-2.0 * lumaRight + lumaRightCorners);
+float edgeVertical =    abs(-2.0 * lumaUp + lumaUpCorners)      + abs(-2.0 * lumaCenter + lumaLeftRight) * 2.0  + abs(-2.0 * lumaDown + lumaDownCorners);
+
+// 边是水平的还是垂直的？
+bool isHorizontal = (edgeHorizontal >= edgeVertical);
+```
+
+如我们的例子，可得：
+
+* 横向梯度 = (-2 \* 0 + 0 + 1) + 2 \* (-2 \* 0 + 0 + 1) + (-2 \* 0 + 1 + 0) = 4
+
+* 纵向梯度 = (-2 \* 0 + 0 + 0) + 2 \* (-2 \* 1 + 1 + 1) + (-2 \* 0 + 0 + 0) = 0
+
+因此，边是水平的。
+
+### 选择边的方向
+
+当前像素不一定恰好位于边上。因此，下一步是确定与边方向正交的哪个方向是实边边界。计算当前像素每边的梯度，其最陡的位置可能位于边的边界上。
+
+```glsl
+// 在与边相反的方向上选择两个相邻的纹理亮度。
+float luma1 = isHorizontal ? lumaDown : lumaLeft;
+float luma2 = isHorizontal ? lumaUp : lumaRight;
+// 计算这个方向的梯度。
+float gradient1 = luma1 - lumaCenter;
+float gradient2 = luma2 - lumaCenter;
+
+// 哪个方向最陡？
+bool is1Steepest = abs(gradient1) >= abs(gradient2);
+
+// 对应方向的梯度，归一化。
+float gradientScaled = 0.25*max(abs(gradient1),abs(gradient2));
+```
+
+在我们的例子中，我们有gradient1 = 0 - 0 = 0和gradient2 = 1 - 0 = 1，因此向上的邻居的变化更强，并且gradientScaled = 0.25。
+
+最后，我们向这个方向移动半个像素，并计算此时的平均亮度。
+
+```glsl
+// 根据边的方向选择步长（一个像素）。
+float stepLength = isHorizontal ? inverseScreenSize.y : inverseScreenSize.x;
+
+// 在正确方向上的平均亮度。
+float lumaLocalAverage = 0.0;
+
+if(is1Steepest){
+    // 转换方向
+    stepLength = - stepLength;
+    lumaLocalAverage = 0.5*(luma1 + lumaCenter);
+} else {
+    lumaLocalAverage = 0.5*(luma2 + lumaCenter);
+}
+
+// 将UV向正确的方向移动半像素。
+vec2 currentUv = In.uv;
+if(isHorizontal){
+    currentUv.y += stepLength * 0.5;
+} else {
+    currentUv.x += stepLength * 0.5;
+}
+```
+
+对于我们的像素，平均局部亮度是0.5\* (1 + 0) = 0.5，并且沿着Y轴的正方向偏移0.5的偏移量。
+
+![exp3](https://zd304.github.io/assets/img/fxaa/exp3.png)<br/>
 
 ## 引用
 
