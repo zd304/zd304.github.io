@@ -114,10 +114,10 @@ if(lumaRange < max(EDGE_THRESHOLD_MIN,lumaMax * EDGE_THRESHOLD_MAX)) {
 
 ```glsl
 // 查询剩余的4个角的亮度。
-float lumaDownLeft = rgb2luma(textureOffset(screenTexture,In.uv,ivec2(-1,-1)).rgb);
-float lumaUpRight = rgb2luma(textureOffset(screenTexture,In.uv,ivec2(1,1)).rgb);
-float lumaUpLeft = rgb2luma(textureOffset(screenTexture,In.uv,ivec2(-1,1)).rgb);
-float lumaDownRight = rgb2luma(textureOffset(screenTexture,In.uv,ivec2(1,-1)).rgb);
+float lumaDownLeft = rgb2luma(textureOffset(screenTexture, In.uv,ivec2(-1, -1)).rgb);
+float lumaUpRight = rgb2luma(textureOffset(screenTexture, In.uv,ivec2(1, 1)).rgb);
+float lumaUpLeft = rgb2luma(textureOffset(screenTexture, In.uv,ivec2(-1, 1)).rgb);
+float lumaDownRight = rgb2luma(textureOffset(screenTexture, In.uv,ivec2(1, -1)).rgb);
 
 // 合并四条边的亮度（使用中间变量为未来计算相同的值）。
 float lumaDownUp = lumaDown + lumaUp;
@@ -145,9 +145,9 @@ bool isHorizontal = (edgeHorizontal >= edgeVertical);
 
 因此，边是水平的。
 
-### 选择边的方向
+### 选择边的取向
 
-当前像素不一定恰好位于边上。因此，下一步是确定与边方向正交的哪个方向是实边边界。计算当前像素每边的梯度，其最陡的位置可能位于边的边界上。
+当前像素不一定恰好位于边上。因此，下一步是确定与边方向正交的哪个方向是“真正”边界。计算当前像素每边的梯度，其最陡的位置可能位于边的边界上。
 
 ```glsl
 // 在与边相反的方向上选择两个相邻的纹理亮度。
@@ -161,18 +161,18 @@ float gradient2 = luma2 - lumaCenter;
 bool is1Steepest = abs(gradient1) >= abs(gradient2);
 
 // 对应方向的梯度，归一化。
-float gradientScaled = 0.25*max(abs(gradient1),abs(gradient2));
+float gradientScaled = 0.25 * max(abs(gradient1), abs(gradient2));
 ```
 
-在我们的例子中，我们有gradient1 = 0 - 0 = 0和gradient2 = 1 - 0 = 1，因此向上的邻居的变化更强，并且gradientScaled = 0.25。
+在我们的例子中，我们有gradient1 = 0 - 0 = 0和gradient2 = 1 - 0 = 1，因此向上的相邻像素的变化更强，并且gradientScaled = 0.25。
 
-最后，我们向这个方向移动半个像素，并计算此时的平均亮度。
+最后，我们向这个方向移动半个像素，并计算此时的中间亮度。
 
 ```glsl
 // 根据边的方向选择步长（一个像素）。
 float stepLength = isHorizontal ? inverseScreenSize.y : inverseScreenSize.x;
 
-// 在正确方向上的平均亮度。
+// 在正确方向上移动像素的亮度到中心像素亮度的中间亮度。
 float lumaLocalAverage = 0.0;
 
 if(is1Steepest){
@@ -192,9 +192,46 @@ if(isHorizontal){
 }
 ```
 
-对于我们的像素，平均局部亮度是0.5\* (1 + 0) = 0.5，并且沿着Y轴的正方向偏移0.5的偏移量。
+对于我们的像素，中间亮度是0.5\* (1 + 0) = 0.5，并且沿着Y轴的正方向偏移0.5的偏移量。
 
 ![exp3](https://zd304.github.io/assets/img/fxaa/exp3.png)<br/>
+
+### 第一次迭代探测
+
+下一步是沿着边的主轴进行探测。我们在两个方向上移动一个像素，在新坐标处查询亮度，计算亮度相对于上一步的中间亮度的变化。如果这个变化大于局部梯度，说明我们在这个方向已经到达边缘的末端，就停止。否则，将UV偏移量增加一个像素。
+
+```glsl
+// 在正确的方向上计算偏移量（每个迭代步骤）。
+vec2 offset = isHorizontal ? vec2(inverseScreenSize.x,0.0) : vec2(0.0,inverseScreenSize.y);
+// 计算uv以探索边缘的每一个方向。QUALITY值允许我们加快步伐。
+vec2 uv1 = currentUv - offset;
+vec2 uv2 = currentUv + offset;
+
+// 读取探测段的两端亮度，并且计算亮度到中间亮度的
+float lumaEnd1 = rgb2luma(texture(screenTexture,uv1).rgb);
+float lumaEnd2 = rgb2luma(texture(screenTexture,uv2).rgb);
+lumaEnd1 -= lumaLocalAverage;
+lumaEnd2 -= lumaLocalAverage;
+
+// 如果当前某一端的亮度差大于局部梯度，则说明已经达到边缘的一侧。
+bool reached1 = abs(lumaEnd1) >= gradientScaled;
+bool reached2 = abs(lumaEnd2) >= gradientScaled;
+bool reachedBoth = reached1 && reached2;
+
+// 如果没有到达边缘一侧，我们将继续朝着这个方向进行探测
+if(!reached1){
+    uv1 -= offset;
+}
+if(!reached2){
+    uv2 += offset;
+}
+```
+
+在这个例子中，我们得到lumaEnd1 = 0.5 - 0.5 = lumaEnd2 = 0.0 < gradientScaled（亮度是0.5，因为在读取纹理时使用了双线性插值），因此我们在两边都继续进行迭代。
+
+![exp4](https://zd304.github.io/assets/img/fxaa/exp4.png)<br/>
+
+
 
 ## 引用
 
