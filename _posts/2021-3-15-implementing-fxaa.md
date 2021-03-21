@@ -166,13 +166,13 @@ float gradientScaled = 0.25 * max(abs(gradient1), abs(gradient2));
 
 在我们的例子中，我们有gradient1 = 0 - 0 = 0和gradient2 = 1 - 0 = 1，因此向上的相邻像素的变化更强，并且gradientScaled = 0.25。
 
-最后，我们向这个方向移动半个像素，并计算此时的中间亮度。
+最后，我们向这个方向移动半个像素，并计算此时的局部平均亮度。
 
 ```glsl
 // 根据边的方向选择步长（一个像素）。
 float stepLength = isHorizontal ? inverseScreenSize.y : inverseScreenSize.x;
 
-// 在正确方向上移动像素的亮度到中心像素亮度的中间亮度。
+// 在正确方向上移动像素的亮度到中心像素亮度的局部平均亮度。
 float lumaLocalAverage = 0.0;
 
 if(is1Steepest){
@@ -192,13 +192,13 @@ if(isHorizontal){
 }
 ```
 
-对于我们的像素，中间亮度是0.5\* (1 + 0) = 0.5，并且沿着Y轴的正方向偏移0.5的偏移量。
+对于我们的像素，局部平均亮度是0.5\* (1 + 0) = 0.5，并且沿着Y轴的正方向偏移0.5的偏移量。
 
 ![exp3](https://zd304.github.io/assets/img/fxaa/exp3.png)<br/>
 
 ### 第一次迭代探测
 
-下一步是沿着边的主轴进行探测。我们在两个方向上移动一个像素，在新坐标处查询亮度，计算亮度相对于上一步的中间亮度的变化。如果这个变化大于局部梯度，说明我们在这个方向已经到达边缘的末端，就停止。否则，将UV偏移量增加一个像素。
+下一步是沿着边的主轴进行探测。我们在两个方向上移动一个像素，在新坐标处查询亮度，计算亮度相对于上一步的局部平均亮度的变化。如果这个变化大于局部梯度，说明我们在这个方向已经到达边缘的末端，就停止。否则，将UV偏移量增加一个像素。
 
 ```glsl
 // 在正确的方向上计算偏移量（每个迭代步骤）。
@@ -207,7 +207,7 @@ vec2 offset = isHorizontal ? vec2(inverseScreenSize.x,0.0) : vec2(0.0,inverseScr
 vec2 uv1 = currentUv - offset;
 vec2 uv2 = currentUv + offset;
 
-// 读取探测段的两端亮度，并且计算亮度到中间亮度的
+// 读取探测段的两端亮度，并且计算亮度到局部平均亮度的
 float lumaEnd1 = rgb2luma(texture(screenTexture,uv1).rgb);
 float lumaEnd2 = rgb2luma(texture(screenTexture,uv2).rgb);
 lumaEnd1 -= lumaLocalAverage;
@@ -270,7 +270,7 @@ if(!reachedBoth){
 }
 ```
 
-最好的情况下，lumaEnd1和lumaEnd2现在包含边缘末端亮度与中间亮度之间的差值，以及对应的UV坐标uv1和uv2。
+最好的情况下，lumaEnd1和lumaEnd2现在包含边缘末端亮度与局部平均亮度之间的差值，以及对应的UV坐标uv1和uv2。
 
 在这个例子中，我们获得了lumaEnd1 = 1-0.5 = 0.5 >= gradientscaling，所以我们可以停止左侧的探索。在右边，我们必须再迭代两次以满足条件。
 
@@ -302,7 +302,7 @@ float pixelOffset = - distanceFinal / edgeThickness + 0.5;
 还有一个附加检查，以确保在端点观察到的亮度变化与当前像素处的亮度一致。否则我们可能走得太远了，我们没有应用任何偏移量。
 
 ```glsl
-// 是否中心亮度小于中间亮度？
+// 是否中心亮度小于局部平局亮度？
 bool isLumaCenterSmaller = lumaCenter < lumaLocalAverage;
 
 // 如果中心的亮度比邻近的小，则两端的亮度差应均为正（变化相同）
@@ -317,7 +317,63 @@ float finalOffset = correctVariation ? pixelOffset : 0.0;
 
 ### 子像素反走样
 
+这个额外的计算步骤允许我们处理子像素走样，例如当细线在屏幕上出现锯齿时。在这些情况下，平均亮度是在3x3附近的像素计算的。用它减去中心亮度，并且除以第一步里计算出来的lumaRange，得到一个子像素的偏移。相对于整个相邻的范围，平均值和中心值之间的对比度差越小，区域就越均匀(即没有单个像素点)，偏移量也就越小。然后对这个偏移量进行细化，我们保留前一步和这一步中较大的偏移量。
 
+```glsl
+// 子像素转移
+// 相邻的3x3像素的加权平均亮度。
+float lumaAverage = (1.0/12.0) * (2.0 * (lumaDownUp + lumaLeftRight) + lumaLeftCorners + lumaRightCorners);
+// 求全局平均亮度和中心亮度的差，和3x3相邻的lumaRange的比值。
+float subPixelOffset1 = clamp(abs(lumaAverage - lumaCenter)/lumaRange,0.0,1.0);
+float subPixelOffset2 = (-2.0 * subPixelOffset1 + 3.0) * subPixelOffset1 * subPixelOffset1;
+// 计算基于此差值的子像素偏移量。
+float subPixelOffsetFinal = subPixelOffset2 * subPixelOffset2 * SUBPIXEL_QUALITY;
+
+// 从两个偏移量中选最大偏移量。
+finalOffset = max(finalOffset,subPixelOffsetFinal);
+```
+
+其中SUBPIXEL_QUALITY = 0.75。
+
+在这个例子中，lumaAverage = (1/12)(2\*(1+0+0+0)+1+1+0+0) = 4/12 = 0.333, subPixelOffset1 = 0.333-0.0/1.0 = 0.333，因此subPixelOffsetFinal = 0.75\*((-2\*0.333+3.0)\*(0.3333)^2)^2 = 0.0503，最大偏移量为0.1666。因此，没有检测或处理子像素走样。
+
+### 最后的读取
+
+最后，我们相应地在与边缘正交的方向偏移UV，并在纹理中最后读取一次。
+
+```glsl
+// 计算最后的UV坐标。
+vec2 finalUv = In.uv;
+if(isHorizontal){
+    finalUv.y += finalOffset * stepLength;
+} else {
+    finalUv.x += finalOffset * stepLength;
+}
+
+// 在新的UV坐标上读取颜色，并使用它。
+vec3 finalColor = texture(screenTexture,finalUv).rgb;
+fragColor = finalColor;
+```
+
+![exp8](https://zd304.github.io/assets/img/fxaa/exp8.png)<br/>
+
+对于所研究的像素，其强度为0.1666*1 +(1-0.1666)*0≈0.1666。
+
+如果我们将这个方法应用到小图像的所有像素，我们得到以下值：
+
+![exp9](https://zd304.github.io/assets/img/fxaa/exp9.png)<br/>
+
+视觉效果如下：
+
+![exp10](https://zd304.github.io/assets/img/fxaa/exp10.png)<br/>
+
+这些像素的平滑程度取决于它们与边缘的相近程度，以及它们在边缘上的位置。由于这个例子过于简单，结果很难验证。在更复杂和明确的图像上，可以获得以下反走样效果：柔软但有效的边缘平滑，对纹理细节的影响最小，以及良好的时间一致性。（左图无AA，右图为FXAA，放大图片查看差异）
+
+![comp2](https://zd304.github.io/assets/img/fxaa/comp2.png)<br/>
+
+![comp3](https://zd304.github.io/assets/img/fxaa/comp3.png)<br/>
+
+![comp4](https://zd304.github.io/assets/img/fxaa/comp4.png)<br/>
 
 ## 引用
 
