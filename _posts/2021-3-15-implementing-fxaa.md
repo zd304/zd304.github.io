@@ -1,8 +1,8 @@
 ---
 layout: post
 title:  "实现FXAA（翻译）"
-categories: Unity
-tags: 游戏 Unity 表格 配置
+categories: 渲染
+tags: 渲染 FXAA 反走样
 author: zack.zhang
 mathjax: true
 ---
@@ -230,6 +230,92 @@ if(!reached2){
 在这个例子中，我们得到lumaEnd1 = 0.5 - 0.5 = lumaEnd2 = 0.0 < gradientScaled（亮度是0.5，因为在读取纹理时使用了双线性插值），因此我们在两边都继续进行迭代。
 
 ![exp4](https://zd304.github.io/assets/img/fxaa/exp4.png)<br/>
+
+### 继续迭代
+
+我们继续迭代，直到到达边缘的两端，或者直到达到最大迭代次数(12)。为了加快速度，我们开始在第五次迭代后增加像素QUALITY(i): 1.5, 2.0, 2.0, 2.0, 2.0, 4.0, 8.0。
+
+```glsl
+// 如果两边都还没有到达，则继续探测。
+if(!reachedBoth){
+
+    for(int i = 2; i < ITERATIONS; i++){
+        // 如果没有到达一侧，读取第一个方向的亮度，计算差值。
+        if(!reached1){
+            lumaEnd1 = rgb2luma(texture(screenTexture, uv1).rgb);
+            lumaEnd1 = lumaEnd1 - lumaLocalAverage;
+        }
+        // 如果没有到达另一侧，读取相反方向的亮度，计算差值。
+        if(!reached2){
+            lumaEnd2 = rgb2luma(texture(screenTexture, uv2).rgb);
+            lumaEnd2 = lumaEnd2 - lumaLocalAverage;
+        }
+		// 如果当前端的亮度差值大于局部梯度，说明我们已经达到了边的一侧。
+        // If the luma deltas at the current extremities is larger than the local gradient, we have reached the side of the edge.
+        reached1 = abs(lumaEnd1) >= gradientScaled;
+        reached2 = abs(lumaEnd2) >= gradientScaled;
+        reachedBoth = reached1 && reached2;
+
+        // 如果这一侧没有到达，我们用变量QUALITY继续沿着这个方向探测。
+        if(!reached1){
+            uv1 -= offset * QUALITY(i);
+        }
+        if(!reached2){
+            uv2 += offset * QUALITY(i);
+        }
+
+        // 如果两侧都已经到达了，则停止探测。
+        if(reachedBoth){ break;}
+    }
+}
+```
+
+最好的情况下，lumaEnd1和lumaEnd2现在包含边缘末端亮度与中间亮度之间的差值，以及对应的UV坐标uv1和uv2。
+
+在这个例子中，我们获得了lumaEnd1 = 1-0.5 = 0.5 >= gradientscaling，所以我们可以停止左侧的探索。在右边，我们必须再迭代两次以满足条件。
+
+![exp7](https://zd304.github.io/assets/img/fxaa/exp7.png)<br/>
+
+### 评估偏移
+
+接下来，我们计算当前像素在两个方向上离端点的距离，并找到最近的那个距离值。UV偏移量是一个估算值，也就是最近距离值和边的总长度的比值。这个值将告诉我们当前像素是在边的中间，还是靠近某一个端点。越接近某一个端点，UV偏移量越大。
+
+```glsl
+// 计算当前像素到每一个端点的距离。
+float distance1 = isHorizontal ? (In.uv.x - uv1.x) : (In.uv.y - uv1.y);
+float distance2 = isHorizontal ? (uv2.x - In.uv.x) : (uv2.y - In.uv.y);
+
+// 到哪个方向的端点最近？
+bool isDirection1 = distance1 < distance2;
+float distanceFinal = min(distance1, distance2);
+
+// 边的长度。
+float edgeThickness = (distance1 + distance2);
+
+// UV偏移：读取离边的端点最近的一侧。
+// distanceFinal / edgeThickness < 0.5；由于越接近端点，UV偏移需要越大，则取负数；+0.5使取值范围为正数。
+float pixelOffset = - distanceFinal / edgeThickness + 0.5;
+```
+
+对于示例像素，我们得到distance1 = 2, distance2 = 4，因此边缘的端点在左边的方向更近(direction1)，我们得到pixelOffset = - 2 / 6 + 0.5 = 0.1666。
+
+还有一个附加检查，以确保在端点观察到的亮度变化与当前像素处的亮度一致。否则我们可能走得太远了，我们没有应用任何偏移量。
+
+```glsl
+// 是否中心亮度小于中间亮度？
+bool isLumaCenterSmaller = lumaCenter < lumaLocalAverage;
+
+// 如果中心的亮度比邻近的小，则两端的亮度差应均为正（变化相同）
+// （在边缘较近的一边的方向。）
+bool correctVariation = ((isDirection1 ? lumaEnd1 : lumaEnd2) < 0.0) != isLumaCenterSmaller;
+
+// 如果亮度变化不正确，不要偏移。
+float finalOffset = correctVariation ? pixelOffset : 0.0;
+```
+
+对于示例像素，中心亮度更小，并且结束亮度不是负的，我们确实有(0.5 < 0.0)!= isLumaCenterSmaller，偏移量计算是有效的。
+
+### 子像素反走样
 
 
 
