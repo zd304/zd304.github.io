@@ -377,4 +377,4 @@ fragColor = finalColor;
 
 ## 引用
 
-原文地址：http://blog.simonrodriguez.fr/articles/30-07-2016_implementing_fxaa.html
+原文地址：<a href="http://blog.simonrodriguez.fr/articles/30-07-2016_implementing_fxaa.html">《Implementing FXAA》</a>
