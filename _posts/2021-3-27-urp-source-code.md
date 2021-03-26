@@ -37,5 +37,53 @@ protected override RenderPipeline CreatePipeline()
 }
 ```
 
+该方法可以理解为URP管线的总的入口函数。
+
 ## UniversalRenderPipeline
+
+管线类UniversalRenderPipeline继承自RenderPipeline，其核心方法为Render()。
+
+```csharp
+//
+// 摘要:
+//     Defines custom rendering for this RenderPipeline.
+//
+// 参数:
+//   context: 可编程渲染的上下文
+//
+//   cameras: 本帧所有需要渲染的相机
+protected abstract void Render(ScriptableRenderContext context, Camera[] cameras);
+```
+
+Render()方法每帧都会被自动调用，在方法中，会处理本帧需要执行的所有渲染命令，来绘制本帧图像。以下为该方法的主要调用。
+
+```csharp
+protected override void Render(ScriptableRenderContext renderContext, Camera[] cameras)
+{
+	BeginFrameRendering(renderContext, cameras);
+	
+	...
+	
+	SortCameras(cameras);
+	for (int i = 0; i < cameras.Length; ++i)
+	{
+		var camera = cameras[i];
+		if (IsGameCamera(camera))
+		{
+			RenderCameraStack(renderContext, camera);
+		}
+		else
+		{
+			BeginCameraRendering(renderContext, camera);
+			
+			UpdateVolumeFramework(camera, null);
+			
+			RenderSingleCamera(renderContext, camera);
+			EndCameraRendering(renderContext, camera);
+		}
+	}
+	
+	EndFrameRendering(renderContext, cameras);
+}
+```
 
