@@ -392,10 +392,8 @@ public override void Setup(ScriptableRenderContext context, ref RenderingData re
 ```
 
 1. 如果当前相机是主相机，判断是否需要渲染到DepthTexture，如果需要就设置当前深度缓冲为m_CameraDepthAttachment，否则就渲染到相机默认渲染目标；判断是否需要渲染到ColorTexture，如果需要就设置当前颜色缓冲为m_CameraColorAttachment，否则就渲染到相机默认渲染目标。
-
->> 需要渲染到ColorTexture的条件包括：打开MSAA、打开RenderScale、打开HDR、打开Post-Processing、打开渲染到OpaqueTexture、添加了自定义ScriptableRendererFeature等。
-
->> 需要渲染到DepthTexture的条件主要是打开渲染到DepthTexture。
+> 需要渲染到ColorTexture的条件包括：打开MSAA、打开RenderScale、打开HDR、打开Post-Processing、打开渲染到OpaqueTexture、添加了自定义ScriptableRendererFeature等。
+> 需要渲染到DepthTexture的条件主要是打开渲染到DepthTexture。
 
 2. 将所有自定义的ScriptableRendererFeature加入到ScriptableRenderPass的队列中。
 
