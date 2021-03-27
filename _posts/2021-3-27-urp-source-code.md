@@ -13,7 +13,7 @@ URP（Universal Render Pipeline）作为一个Unity预先构建好的SRP（Scrip
 
 <!-- more -->
 
-## UniversalRenderPipelineAsset
+## 1. UniversalRenderPipelineAsset类
 
 要使用URP，需要先创建一个URP Asset，并且将它赋给Graphics Settings。URP Asset便是UniversalRenderPipelineAsset这个类的实例。其保存了URP的一些设置，这里我们不去详细介绍。这里要去关注的是CreatePipeline()方法，它继承于父类RenderPipelineAsset。
 
@@ -39,7 +39,7 @@ protected override RenderPipeline CreatePipeline()
 
 该方法可以理解为URP管线的总的入口函数。
 
-## UniversalRenderPipeline
+## 2. UniversalRenderPipeline类
 
 管线类UniversalRenderPipeline继承自RenderPipeline，其核心方法为Render(...)。
 
@@ -55,7 +55,7 @@ protected override RenderPipeline CreatePipeline()
 protected abstract void Render(ScriptableRenderContext context, Camera[] cameras);
 ```
 
-### Render(...)
+### 2.1. Render(...)方法
 
 Render(...)方法每帧都会被自动调用，在方法中，会处理本帧需要执行的所有渲染命令，来绘制本帧图像。以下为该方法的主要调用。
 
@@ -110,7 +110,7 @@ protected override void Render(ScriptableRenderContext renderContext, Camera[] c
 
 7. EndFrameRendering：表示该帧渲染结束，提交后备缓冲区。
 
-### RenderCameraStack(...)
+### 2.2. RenderCameraStack(...)方法
 
 如上文所述，Render(...)方法里如果遍历到主相机，就会去调用RenderCameraStack(...)。RenderCameraStack(...)方法主要是去遍历主相机的CameraStack里的每一个Overlay相机，并且把主相机和所有生效的Overlay相机全部渲染出来。以下为该方法的主要调用。
 
@@ -191,29 +191,29 @@ static void RenderCameraStack(ScriptableRenderContext context, Camera baseCamera
 
 8. 结束遍历CameraStack里每一个相机。
 
-### “相机渲染常规步骤”
+### 2.3. “相机渲染常规步骤”
 
-#### BeginCameraRendering(...)
+#### 2.3.1. BeginCameraRendering(...)方法
 
 RenderPipeline的protected方法，表示某一个相机即将开始渲染，渲染相机的固定调用。
 
-#### UpdateVolumeFramework(...)
+#### 2.3.2. UpdateVolumeFramework(...)方法
 
 更新当前相机是否在某一个后期效果的Volume内，如果在Volume内则触发对应的后期效果。
 
-#### InitializeCameraData(...)
+#### 2.3.3. InitializeCameraData(...)方法
 
 首先根据官方文档，在URP里相机上会绑一个叫做UniversalAdditionalCameraData的脚本。该脚本包含的变量，描述了该相机是否有某些渲染特性，比如是否需要渲染DepthTexture，是否需要渲染OpaqueTexture等。InitializeCameraData(...)就是将这些变量值从当前相机的UniversalAdditionalCameraData脚本里提取出来，供相机内的渲染使用。
 
-#### RenderSingleCamera(...)
+#### 2.3.4. RenderSingleCamera(...)方法
 
 该方法用于渲染一个相机，其过程主要包括剪裁、设置渲染器、执行渲染器三步。后续会详细描述。
 
-#### EndCameraRendering(...)
+#### 2.3.5. EndCameraRendering(...)方法
 
 RenderPipeline的protected方法，表示某一个相机已经结束渲染，渲染相机的固定调用。
 
-### RenderSingleCamera(...)
+### 2.4. RenderSingleCamera(...)方法
 
 如上文所述，方法过程主要包括剪裁、设置渲染器、执行渲染器三步。以下为该方法的主要调用。
 
@@ -284,13 +284,13 @@ static void RenderSingleCamera(ScriptableRenderContext context, CameraData camer
 
 11. 调用渲染器的Execute(...)，执行已经在队列中的渲染过程。后面会针对前向渲染器（ForwardRenderer）作详细描述。
 
-## ForwardRenderer
+## 3. ForwardRenderer类
 
 ForwardRenderer继承于ScriptableRenderer，这个渲染器被所有支持URP的平台所支持。这个渲染器维护了一个ScriptableRenderPass的列表，每一帧都会往列表里加入Pass，帧中执行Pass得到每一个过程的渲染结果，帧末清空列表，等待下一帧的填充。它渲染的资源被序列化成ScriptableRendererData。
 
 ScriptableRenderer里面最核心的两个方法是Setup(...)和Execute(...)，这两个方法在每一帧里都会被执行。Setup(...)会根据渲染数据，将本帧要执行的Pass加入到ScriptableRenderPass的列表中；Execute(...)从ScriptableRenderPass的列表中将Pass按照渲染时序分类（即RenderPassEvent）取出来，并执行这个过程。
 
-### Setup(...)
+### 3.1. Setup(...)方法
 
 该方法在ScriptableRenderer里面是一个虚方法，任何继承于ScriptableRenderer的子渲染器都需要去实现它。实现它的过程也就是将Pass加入队列的过程，由于队列是FIFO的，所以这个入队的过程也就是本帧内渲染的过程。
 
@@ -401,7 +401,7 @@ public override void Setup(ScriptableRenderContext context, ref RenderingData re
 
 4. 如果当前相机是本帧最后一个渲染的相机，则将一些需要最后Blit的Pass加入到ScriptableRenderPass的队列中。
 
-### Execute(...)
+### 3.2. Execute(...)
 
 该方法在ScriptableRenderer里面是一个不用重写的公共方法，由于各个Pass的执行顺序在Setup(...)里已经确定，所以该方法已经没有重写的必要了。不过还是可以看一下Execute(...)里面发生了什么。以下为该方法的主要调用。
 
@@ -438,7 +438,7 @@ public void Execute(ScriptableRenderContext context, ref RenderingData rendering
 
 2. 根据不同的渲染阶段，取出这个阶段所有Pass依次执行其中的渲染过程。
 
-## 总结
+## 4. 总结
 
 以上所述，即为URP的主体代码，详细代码（比如每一个ScriptableRenderPass，不同的渲染器，细节的渲染过程）可以细读com.unity.render-pipelines.universal里面的代码。
 
