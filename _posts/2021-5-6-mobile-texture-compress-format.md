@@ -37,3 +37,33 @@ author: zack.zhang
 
 ## 纹理压缩格式对比
 
+<table>
+  <thead>
+    <tr>
+      <th>压缩格式</th>
+      <th>像素深度</th>
+      <th>图像效果</th>
+	  <th>适配性</th>
+	  <th>GL扩展名</th>
+	  <th>使用说明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>ETC1</td>
+      <td>4bpp</td>
+      <td>★★</td>
+	  <td>支持OpenGL ES 2.0的设备上</td>
+	  <td></td>
+	  <td></td>
+    </tr>
+    <tr>
+      <td>ETC2-RGB</td>
+      <td>4bpp</td>
+      <td>★★</td>
+	  <td></td>
+	  <td></td>
+	  <td></td>
+    </tr>
+  </tbody>
+</table>
