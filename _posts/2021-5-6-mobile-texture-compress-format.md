@@ -97,7 +97,7 @@ GL扩展名：GL_IMG_texture_compression_pvrtc
 
 像素深度：4bpp
 
-图像质量：★★
+图像质量：★★★
 
 支持通道：RGB/RGBA
 
