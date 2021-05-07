@@ -115,7 +115,7 @@ GL扩展名：GL_IMG_texture_compression_pvrtc
 
 支持通道：RGBA
 
-适配性：支持OpenGL ES 3.0的设备上，不支持设备包括Qualcomm Adreno4xx / Snapdragon 415 (2015) 以下、 ARM Mali T624 (2012)以下、NVIDIA Tegra K1 (2014) 以下、PowerVR GX6250 (2014)以下
+适配性：支持OpenGL ES 3.0的设备，不支持设备包括Qualcomm Adreno4xx / Snapdragon 415 (2015) 以下、 ARM Mali T624 (2012)以下、NVIDIA Tegra K1 (2014) 以下、PowerVR GX6250 (2014)以下
 
 GL扩展名：GL_KHR_texture_compression_astc_ldr
 
@@ -129,7 +129,7 @@ GL扩展名：GL_KHR_texture_compression_astc_ldr
 
 支持通道：RGBA
 
-适配性：支持OpenGL ES 3.0的设备上，不支持设备包括Qualcomm Adreno4xx / Snapdragon 415 (2015) 以下、 ARM Mali T624 (2012)以下、NVIDIA Tegra K1 (2014) 以下、PowerVR GX6250 (2014)以下
+适配性：支持OpenGL ES 3.0的设备，不支持设备包括Qualcomm Adreno4xx / Snapdragon 415 (2015) 以下、 ARM Mali T624 (2012)以下、NVIDIA Tegra K1 (2014) 以下、PowerVR GX6250 (2014)以下
 
 GL扩展名：GL_KHR_texture_compression_astc_ldr
 
