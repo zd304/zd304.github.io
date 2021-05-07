@@ -77,7 +77,7 @@ GL扩展名：GL_compressed_RGB8_ETC2
 
 GL扩展名：GL_compressed_RGBA8_ETC2_EAC
 
-纹理尺寸：按4×4的块Block来划分，每个Block占64bit，所以纹理长度和宽度都必须为4的倍数
+纹理尺寸：按4×4的块Block来划分，每个Block占128bit（包含alpha通道64bit），所以纹理长度和宽度都必须为4的倍数
 
 ### PVRTC2 2-bpp
 
