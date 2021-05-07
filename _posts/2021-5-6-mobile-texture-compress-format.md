@@ -1,8 +1,8 @@
 ---
 layout: post
-title:  "Unity移动游戏纹理压缩格式优化"
+title:  "Unity性能优化——移动游戏纹理压缩格式"
 categories: Unity
-tags: 游戏 Unity 优化 贴图
+tags: 游戏 Unity 性能优化 贴图
 author: zack.zhang
 ---
 
