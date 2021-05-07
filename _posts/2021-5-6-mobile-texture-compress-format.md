@@ -23,7 +23,7 @@ author: zack.zhang
 
 例如Unity中使用图片时，无论导入的是什么样的图片，最终都会根据平台的不同转换成不同的纹理格式。
 
-![unity_compressd_list](https://zd304.github.io/assets/img/fxaa/unity_compressd_list.png)<br/>
+![unity_compressd_list](https://zd304.github.io/assets/img/TexFormat/unity_compressd_list.png)<br/>
 
 ## 像素深度
 
@@ -42,28 +42,121 @@ author: zack.zhang
     <tr>
       <th>压缩格式</th>
       <th>像素深度</th>
-      <th>图像效果</th>
+      <th>图像质量</th>
+	  <th>支持通道</th>
 	  <th>适配性</th>
 	  <th>GL扩展名</th>
-	  <th>使用说明</th>
+	  <th>纹理尺寸</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td>ETC1</td>
       <td>4bpp</td>
-      <td>★★</td>
+      <td>★★★</td>
+	  <th>RGB</th>
 	  <td>支持OpenGL ES 2.0的设备上</td>
-	  <td></td>
-	  <td></td>
+	  <td>GL_OES_compressed_ETC1_RGB8_texture</td>
+	  <td>按4×4的块Block来划分，每个Block占64bit，所以纹理长度和宽度都必须为4的倍数</td>
     </tr>
     <tr>
       <td>ETC2-RGB</td>
       <td>4bpp</td>
+      <td>★★★</td>
+	  <th>RGB</th>
+	  <td>支持OpenGL ES 3.0的设备上</td>
+	  <td>GL_compressed_RGB8_ETC2</td>
+	  <td>按4×4的块Block来划分，每个Block占64bit，所以纹理长度和宽度都必须为4的倍数</td>
+    </tr>
+	<tr>
+      <td>ETC2-RGBA</td>
+      <td>8bpp</td>
+      <td>★★★</td>
+	  <th>RGBA</th>
+	  <td>支持OpenGL ES 3.0的设备上</td>
+	  <td>GL_compressed_RGBA8_ETC2_EAC</td>
+	  <td>按4×4的块Block来划分，每个Block占64bit，所以纹理长度和宽度都必须为4的倍数</td>
+    </tr>
+	<tr>
+      <td>PVRTC2 2-bpp</td>
+      <td>2bpp</td>
       <td>★★</td>
-	  <td></td>
-	  <td></td>
-	  <td></td>
+	  <th>RGB/RGBA</th>
+	  <td>PowerVR架构</td>
+	  <td>GL_IMG_texture_compression_pvrtc</td>
+	  <td>任何尺寸纹理</td>
+    </tr>
+	<tr>
+      <td>PVRTC2 4-bpp</td>
+      <td>4bpp</td>
+      <td>★★★</td>
+	  <th>RGB/RGBA</th>
+	  <td>PowerVR架构</td>
+	  <td>GL_IMG_texture_compression_pvrtc</td>
+	  <td>任何尺寸纹理</td>
+    </tr>
+	<tr>
+      <td>ASTC 4x4</td>
+      <td>8bpp</td>
+      <td>★★★★★</td>
+	  <th>RGBA</th>
+	  <td>支持OpenGL ES 3.0的设备上，以下设备不支持：Qualcomm Adreno4xx / Snapdragon 415 (2015) 以下、 ARM Mali T624 (2012)以下、NVIDIA Tegra K1 (2014) 以下、PowerVR GX6250 (2014)以下</td>
+	  <td>GL_KHR_texture_compression_astc_ldr</td>
+	  <td>任何尺寸纹理</td>
+    </tr>
+	<tr>
+      <td>ASTC 5x4</td>
+      <td>6.4bpp</td>
+      <td>★★★★☆</td>
+	  <th>RGBA</th>
+	  <td>支持OpenGL ES 3.0的设备上，以下设备不支持：Qualcomm Adreno4xx / Snapdragon 415 (2015) 以下、 ARM Mali T624 (2012)以下、NVIDIA Tegra K1 (2014) 以下、PowerVR GX6250 (2014)以下</td>
+	  <td>GL_KHR_texture_compression_astc_ldr</td>
+	  <td>任何尺寸纹理</td>
+    </tr>
+	<tr>
+      <td>ASTC 5x5</td>
+      <td>5.12bpp</td>
+      <td>★★★★</td>
+	  <th>RGBA</th>
+	  <td>支持OpenGL ES 3.0的设备上，以下设备不支持：Qualcomm Adreno4xx / Snapdragon 415 (2015) 以下、 ARM Mali T624 (2012)以下、NVIDIA Tegra K1 (2014) 以下、PowerVR GX6250 (2014)以下</td>
+	  <td>GL_KHR_texture_compression_astc_ldr</td>
+	  <td>任何尺寸纹理</td>
+    </tr>
+	<tr>
+      <td>ASTC 6x5</td>
+      <td>4.27bpp</td>
+      <td>★★★☆</td>
+	  <th>RGBA</th>
+	  <td>支持OpenGL ES 3.0的设备上，以下设备不支持：Qualcomm Adreno4xx / Snapdragon 415 (2015) 以下、 ARM Mali T624 (2012)以下、NVIDIA Tegra K1 (2014) 以下、PowerVR GX6250 (2014)以下</td>
+	  <td>GL_KHR_texture_compression_astc_ldr</td>
+	  <td>任何尺寸纹理</td>
+    </tr>
+	<tr>
+      <td>ASTC 6x6</td>
+      <td>3.56bpp</td>
+      <td>★★★</td>
+	  <th>RGBA</th>
+	  <td>支持OpenGL ES 3.0的设备上，以下设备不支持：Qualcomm Adreno4xx / Snapdragon 415 (2015) 以下、 ARM Mali T624 (2012)以下、NVIDIA Tegra K1 (2014) 以下、PowerVR GX6250 (2014)以下</td>
+	  <td>GL_KHR_texture_compression_astc_ldr</td>
+	  <td>任何尺寸纹理</td>
+    </tr>
+	<tr>
+      <td>ASTC 8x5</td>
+      <td>3.2bpp</td>
+      <td>★★☆</td>
+	  <th>RGBA</th>
+	  <td>支持OpenGL ES 3.0的设备上，以下设备不支持：Qualcomm Adreno4xx / Snapdragon 415 (2015) 以下、 ARM Mali T624 (2012)以下、NVIDIA Tegra K1 (2014) 以下、PowerVR GX6250 (2014)以下</td>
+	  <td>GL_KHR_texture_compression_astc_ldr</td>
+	  <td>任何尺寸纹理</td>
+    </tr>
+	<tr>
+      <td>ASTC 8x8</td>
+      <td>2bpp</td>
+      <td>★★☆</td>
+	  <th>RGBA</th>
+	  <td>支持OpenGL ES 3.0的设备上，以下设备不支持：Qualcomm Adreno4xx / Snapdragon 415 (2015) 以下、 ARM Mali T624 (2012)以下、NVIDIA Tegra K1 (2014) 以下、PowerVR GX6250 (2014)以下</td>
+	  <td>GL_KHR_texture_compression_astc_ldr</td>
+	  <td>任何尺寸纹理</td>
     </tr>
   </tbody>
 </table>
